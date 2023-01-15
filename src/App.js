@@ -1,7 +1,8 @@
-import { Button } from '@mui/material';
+import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
 import { SideBar, StepOne } from './components';
+import StepTwo from './components/StepTwo';
 
 const FormPanel = styled('div')({
   width: 940,
@@ -23,14 +24,36 @@ const MainContent = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  width: 600,
   padding: 17,
+  width: 'calc(100% - 309px)',
+});
+
+const MainContentMobile = styled('div')({
+  position: 'absolute',
+  marginTop: '-60px !important',
+  margin: 15,
+  width: 'calc(100% - 70px)',
+  backgroundColor: 'white',
+  borderRadius: 15,
+  padding: 20,
 });
 
 const ActionGroup = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   margin: 10,
+  marginLeft: 80,
+  marginRight: 80,
+});
+
+const ActionGroupMobile = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  position: 'absolute',
+  width: 'calc(100% - 30px)',
+  bottom: 0,
+  padding: 15,
+  backgroundColor: 'white',
 });
 
 const PrevButton = styled(Button)(({ step }) => ({
@@ -56,19 +79,25 @@ const NextButton = styled(Button)(({ step }) => ({
 }));
 
 const StepContent = (props) => {
-  const { step } = props;
+  const { step, handleCheckNextStep } = props;
 
   switch (step) {
     case 1:
-      return <StepOne />;
+      return <StepOne handleCheckNextStep={handleCheckNextStep} />;
+    case 2:
+      return <StepTwo />;
   }
 };
 
 const App = () => {
   const [step, setStep] = useState(1);
+  const [moveToSecond, setMoveToSecond] = useState(false);
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClickNextButton = () => {
-    if (step < 4) {
+    if (moveToSecond && step < 4) {
       setStep(step + 1);
     }
   };
@@ -79,12 +108,39 @@ const App = () => {
     }
   };
 
+  const handleCheckNextStep = (value) => {
+    setMoveToSecond(value);
+  };
+
+  if (matches) {
+    return (
+      <div>
+        <SideBar />
+        <MainContentMobile>
+          <StepContent step={step} handleCheckNextStep={handleCheckNextStep} />
+        </MainContentMobile>
+        <ActionGroupMobile>
+          <PrevButton step={step} onClick={handleClickPrevButton}>
+            Go Back
+          </PrevButton>
+          <NextButton
+            variant="contained"
+            step={step}
+            onClick={handleClickNextButton}
+          >
+            {step === 4 ? 'Confirm' : 'Next Step'}
+          </NextButton>
+        </ActionGroupMobile>
+      </div>
+    );
+  }
+
   return (
     <Container>
       <FormPanel>
         <SideBar />
         <MainContent>
-          <StepContent step={step} />
+          <StepContent step={step} handleCheckNextStep={handleCheckNextStep} />
           <ActionGroup>
             <PrevButton step={step} onClick={handleClickPrevButton}>
               Go Back
