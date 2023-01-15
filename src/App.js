@@ -1,9 +1,7 @@
 import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
-import { useState } from 'react';
-import { SideBar, StepOne } from './components';
-import StepThree from './components/StepThree';
-import StepTwo from './components/StepTwo';
+import { useState, createContext } from 'react';
+import { SideBar, StepOne, StepTwo, StepThree, StepLast } from './components';
 
 const FormPanel = styled('div')({
   width: 940,
@@ -79,28 +77,78 @@ const NextButton = styled(Button)(({ step }) => ({
   textTransform: 'none',
 }));
 
+export const MultiFormContext = createContext();
+
 const StepContent = (props) => {
-  const { step, handleCheckNextStep } = props;
+  const { step } = props;
 
   switch (step) {
     case 1:
-      return <StepOne handleCheckNextStep={handleCheckNextStep} />;
+      return <StepOne />;
     case 2:
       return <StepTwo />;
     case 3:
       return <StepThree />;
+    case 4:
+      return <StepLast />;
   }
 };
 
 const App = () => {
   const [step, setStep] = useState(1);
-  const [moveToSecond, setMoveToSecond] = useState(false);
+  const [multiFormValue, setMultiFormValue] = useState({
+    info: {
+      name: '',
+      email: '',
+      phone: '',
+    },
+    plan: {
+      arcade: {
+        select: true,
+        monthly: 9,
+        yearly: 90,
+      },
+      advanced: {
+        select: false,
+        monthly: 12,
+        yearly: 120,
+      },
+      pro: {
+        select: false,
+        monthly: 15,
+        yearly: 150,
+      },
+    },
+    yearly: false,
+    addon: {
+      service: {
+        select: false,
+        monthly: 1,
+        yearly: 10,
+      },
+      storage: {
+        select: false,
+        monthly: 2,
+        yearly: 20,
+      },
+      profile: {
+        select: false,
+        monthly: 2,
+        yearly: 20,
+      },
+    },
+  });
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClickNextButton = () => {
-    if (moveToSecond && step < 4) {
+    if (
+      multiFormValue['info']['name'].length !== 0 &&
+      multiFormValue['info']['email'].length !== 0 &&
+      multiFormValue['info']['phone'].length !== 0 &&
+      step < 4
+    ) {
       setStep(step + 1);
     }
   };
@@ -111,40 +159,15 @@ const App = () => {
     }
   };
 
-  const handleCheckNextStep = (value) => {
-    setMoveToSecond(value);
-  };
-
   if (matches) {
     return (
-      <div>
-        <SideBar />
-        <MainContentMobile>
-          <StepContent step={step} handleCheckNextStep={handleCheckNextStep} />
-        </MainContentMobile>
-        <ActionGroupMobile>
-          <PrevButton step={step} onClick={handleClickPrevButton}>
-            Go Back
-          </PrevButton>
-          <NextButton
-            variant="contained"
-            step={step}
-            onClick={handleClickNextButton}
-          >
-            {step === 4 ? 'Confirm' : 'Next Step'}
-          </NextButton>
-        </ActionGroupMobile>
-      </div>
-    );
-  }
-
-  return (
-    <Container>
-      <FormPanel>
-        <SideBar />
-        <MainContent>
-          <StepContent step={step} handleCheckNextStep={handleCheckNextStep} />
-          <ActionGroup>
+      <MultiFormContext.Provider value={[multiFormValue, setMultiFormValue]}>
+        <div>
+          <SideBar />
+          <MainContentMobile>
+            <StepContent step={step} />
+          </MainContentMobile>
+          <ActionGroupMobile>
             <PrevButton step={step} onClick={handleClickPrevButton}>
               Go Back
             </PrevButton>
@@ -155,10 +178,35 @@ const App = () => {
             >
               {step === 4 ? 'Confirm' : 'Next Step'}
             </NextButton>
-          </ActionGroup>
-        </MainContent>
-      </FormPanel>
-    </Container>
+          </ActionGroupMobile>
+        </div>
+      </MultiFormContext.Provider>
+    );
+  }
+
+  return (
+    <MultiFormContext.Provider value={[multiFormValue, setMultiFormValue]}>
+      <Container>
+        <FormPanel>
+          <SideBar />
+          <MainContent>
+            <StepContent step={step} />
+            <ActionGroup>
+              <PrevButton step={step} onClick={handleClickPrevButton}>
+                Go Back
+              </PrevButton>
+              <NextButton
+                variant="contained"
+                step={step}
+                onClick={handleClickNextButton}
+              >
+                {step === 4 ? 'Confirm' : 'Next Step'}
+              </NextButton>
+            </ActionGroup>
+          </MainContent>
+        </FormPanel>
+      </Container>
+    </MultiFormContext.Provider>
   );
 };
 

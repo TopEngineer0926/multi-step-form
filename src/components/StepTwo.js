@@ -1,6 +1,7 @@
 import { Typography, useMediaQuery, useTheme, Switch } from '@mui/material';
 import { styled } from '@mui/system';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
   width: 600,
@@ -60,25 +61,44 @@ const StyledStepTwoContent = styled('div')(({ matches }) => ({
 }));
 
 const StepTwoContent = ({ matches }) => {
-  const initialCardType = {
-    arcade: false,
-    advanced: false,
-    pro: false,
+  const [multiFormValue, setMultiFormValue] = useContext(MultiFormContext);
+
+  const initialPlan = {
+    arcade: {
+      select: false,
+      monthly: 9,
+      yearly: 90,
+    },
+    advanced: {
+      select: false,
+      monthly: 12,
+      yearly: 120,
+    },
+    pro: {
+      select: false,
+      monthly: 15,
+      yearly: 150,
+    },
   };
 
-  const [cardType, setCardType] = useState(initialCardType);
-
-  const [yearPlan, setYearPlan] = useState(false);
-
   const handleClickCard = (type) => {
-    setCardType({
-      ...initialCardType,
-      [type]: true,
+    setMultiFormValue({
+      ...multiFormValue,
+      plan: {
+        ...initialPlan,
+        [type]: {
+          ...multiFormValue['plan'][type],
+          select: true,
+        },
+      },
     });
   };
 
   const handleChangeYearPlan = (e) => {
-    setYearPlan(e.target.checked);
+    setMultiFormValue({
+      ...multiFormValue,
+      yearly: e.target.checked,
+    });
   };
 
   return (
@@ -95,7 +115,9 @@ const StepTwoContent = ({ matches }) => {
         <PlanCard
           matches={matches ? 'true' : 'false'}
           onClick={() => handleClickCard('arcade')}
-          cardType={cardType['arcade'] ? 'true' : 'false'}
+          cardType={
+            multiFormValue['plan']['arcade']['select'] ? 'true' : 'false'
+          }
         >
           <img src="/assets/images/icon-arcade.svg" />
           <div>
@@ -103,9 +125,11 @@ const StepTwoContent = ({ matches }) => {
               Arcade
             </Typography>
             <Typography color="hsl(229, 24%, 87%)">
-              {yearPlan ? '$90/yr' : '$9/mo'}
+              {multiFormValue['yearly']
+                ? `$${multiFormValue['plan']['arcade']['yearly']}/yr`
+                : `$${multiFormValue['plan']['arcade']['monthly']}/mo`}
             </Typography>
-            {yearPlan && (
+            {multiFormValue['yearly'] && (
               <Typography variant="body2" color="hsl(213, 96%, 18%)">
                 2 months free
               </Typography>
@@ -115,7 +139,9 @@ const StepTwoContent = ({ matches }) => {
         <PlanCard
           matches={matches ? 'true' : 'false'}
           onClick={() => handleClickCard('advanced')}
-          cardType={cardType['advanced'] ? 'true' : 'false'}
+          cardType={
+            multiFormValue['plan']['advanced']['select'] ? 'true' : 'false'
+          }
         >
           <img src="/assets/images/icon-advanced.svg" />
           <div>
@@ -123,9 +149,11 @@ const StepTwoContent = ({ matches }) => {
               Advanced
             </Typography>
             <Typography color="hsl(229, 24%, 87%)">
-              {yearPlan ? '$120/yr' : '$12/mo'}
+              {multiFormValue['yearly']
+                ? `$${multiFormValue['plan']['advanced']['yearly']}/yr`
+                : `$${multiFormValue['plan']['advanced']['monthly']}/mo`}
             </Typography>
-            {yearPlan && (
+            {multiFormValue['yearly'] && (
               <Typography variant="body2" color="hsl(213, 96%, 18%)">
                 2 months free
               </Typography>
@@ -135,7 +163,7 @@ const StepTwoContent = ({ matches }) => {
         <PlanCard
           matches={matches ? 'true' : 'false'}
           onClick={() => handleClickCard('pro')}
-          cardType={cardType['pro'] ? 'true' : 'false'}
+          cardType={multiFormValue['plan']['pro']['select'] ? 'true' : 'false'}
         >
           <img src="/assets/images/icon-pro.svg" />
           <div>
@@ -143,9 +171,11 @@ const StepTwoContent = ({ matches }) => {
               Pro
             </Typography>
             <Typography color="hsl(229, 24%, 87%)">
-              {yearPlan ? '$150/yr' : '$15/mo'}
+              {multiFormValue['yearly']
+                ? `$${multiFormValue['plan']['pro']['yearly']}/yr`
+                : `$${multiFormValue['plan']['pro']['monthly']}/mo`}
             </Typography>
-            {yearPlan && (
+            {multiFormValue['yearly'] && (
               <Typography variant="body2" color="hsl(213, 96%, 18%)">
                 2 months free
               </Typography>
@@ -156,14 +186,25 @@ const StepTwoContent = ({ matches }) => {
       <PlanOption>
         <Typography
           variant="h6"
-          color={yearPlan ? 'hsl(229, 24%, 87%)' : 'hsl(213, 96%, 18%)'}
+          color={
+            multiFormValue['yearly']
+              ? 'hsl(229, 24%, 87%)'
+              : 'hsl(213, 96%, 18%)'
+          }
         >
           Monthly
         </Typography>
-        <Switch checked={yearPlan} onChange={handleChangeYearPlan} />
+        <Switch
+          checked={multiFormValue['yearly']}
+          onChange={handleChangeYearPlan}
+        />
         <Typography
           variant="h6"
-          color={yearPlan ? 'hsl(213, 96%, 18%)' : 'hsl(229, 24%, 87%)'}
+          color={
+            multiFormValue['yearly']
+              ? 'hsl(213, 96%, 18%)'
+              : 'hsl(229, 24%, 87%)'
+          }
         >
           Yearly
         </Typography>

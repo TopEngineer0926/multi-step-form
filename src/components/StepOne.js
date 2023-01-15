@@ -1,7 +1,8 @@
 import { TextField, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
   width: 600,
@@ -29,31 +30,18 @@ const InputPanel = styled('div')({
   justifyContent: 'space-between',
 });
 
-const StepOneContent = ({ handleCheckNextStep }) => {
-  const [inputForm, setInputForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-  });
+const StepOneContent = () => {
+  const [multiFormValue, setMultiFormValue] = useContext(MultiFormContext);
 
   const handleChangeInputForm = (e, type) => {
-    setInputForm({
-      ...inputForm,
-      [type]: e.target.value,
+    setMultiFormValue({
+      ...multiFormValue,
+      info: {
+        ...multiFormValue['info'],
+        [type]: e.target.value,
+      },
     });
   };
-
-  useEffect(() => {
-    if (
-      inputForm['name'].length !== 0 &&
-      inputForm['email'].length !== 0 &&
-      inputForm['phone'].length !== 0
-    ) {
-      handleCheckNextStep(true);
-    } else {
-      handleCheckNextStep(false);
-    }
-  }, [inputForm]);
 
   return (
     <>
@@ -68,7 +56,7 @@ const StepOneContent = ({ handleCheckNextStep }) => {
           <Typography variant="body2" color="hsl(213, 96%, 18%)">
             Name
           </Typography>
-          {inputForm['name'].length === 0 && (
+          {multiFormValue['info']['name'].length === 0 && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -77,8 +65,8 @@ const StepOneContent = ({ handleCheckNextStep }) => {
         <TextField
           fullWidth
           placeholder="e.g. Stephen King"
-          error={inputForm['name'].length === 0}
-          value={inputForm['name']}
+          error={multiFormValue['info']['name'].length === 0}
+          value={multiFormValue['info']['name']}
           onChange={(e) => handleChangeInputForm(e, 'name')}
         />
       </div>
@@ -87,7 +75,7 @@ const StepOneContent = ({ handleCheckNextStep }) => {
           <Typography variant="body2" color="hsl(213, 96%, 18%)">
             Email Address
           </Typography>
-          {inputForm['email'].length === 0 && (
+          {multiFormValue['info']['email'].length === 0 && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -96,8 +84,8 @@ const StepOneContent = ({ handleCheckNextStep }) => {
         <TextField
           fullWidth
           placeholder="e.g. stephenking@lorem.com"
-          error={inputForm['email'].length === 0}
-          value={inputForm['email']}
+          error={multiFormValue['info']['email'].length === 0}
+          value={multiFormValue['info']['email']}
           onChange={(e) => handleChangeInputForm(e, 'email')}
         />
       </div>
@@ -106,7 +94,7 @@ const StepOneContent = ({ handleCheckNextStep }) => {
           <Typography variant="body2" color="hsl(213, 96%, 18%)">
             Phone Number
           </Typography>
-          {inputForm['phone'].length === 0 && (
+          {multiFormValue['info']['phone'].length === 0 && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -115,8 +103,8 @@ const StepOneContent = ({ handleCheckNextStep }) => {
         <TextField
           fullWidth
           placeholder="e.g. +1 234 567 890"
-          error={inputForm['phone'].length === 0}
-          value={inputForm['phone']}
+          error={multiFormValue['info']['phone'].length === 0}
+          value={multiFormValue['info']['phone']}
           onChange={(e) => handleChangeInputForm(e, 'phone')}
         />
       </div>
@@ -124,16 +112,14 @@ const StepOneContent = ({ handleCheckNextStep }) => {
   );
 };
 
-const StepOne = (props) => {
-  const { handleCheckNextStep } = props;
-
+const StepOne = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   if (matches) {
     return (
       <ContainerMobile>
-        <StepOneContent handleCheckNextStep={handleCheckNextStep} />
+        <StepOneContent />
       </ContainerMobile>
     );
   }
@@ -141,7 +127,7 @@ const StepOne = (props) => {
   return (
     <Container>
       <StepOneTitle>
-        <StepOneContent handleCheckNextStep={handleCheckNextStep} />
+        <StepOneContent />
       </StepOneTitle>
     </Container>
   );

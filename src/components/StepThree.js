@@ -1,6 +1,7 @@
 import { Typography, useMediaQuery, useTheme, Checkbox } from '@mui/material';
 import { styled } from '@mui/system';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
   width: 600,
@@ -59,19 +60,18 @@ const StyledStepThreeContent = styled('div')(({ matches }) => ({
 }));
 
 const StepThreeContent = ({ matches }) => {
-  const initialCardType = {
-    service: false,
-    storage: false,
-    profile: false,
-  };
-
-  const yearPlan = false;
-  const [cardType, setCardType] = useState(initialCardType);
+  const [multiFormValue, setMultiFormValue] = useContext(MultiFormContext);
 
   const handleClickCard = (type) => {
-    setCardType({
-      ...cardType,
-      [type]: !cardType[type],
+    setMultiFormValue({
+      ...multiFormValue,
+      addon: {
+        ...multiFormValue['addon'],
+        [type]: {
+          ...multiFormValue['addon'][type],
+          select: !multiFormValue['addon'][type]['select'],
+        },
+      },
     });
   };
 
@@ -79,20 +79,22 @@ const StepThreeContent = ({ matches }) => {
     <StyledStepThreeContent>
       <div>
         <Typography variant="h4" color="hsl(213, 96%, 18%)">
-          Select your plan
+          Pick add-ons
         </Typography>
         <Typography variant="body1" color="hsl(229, 24%, 87%)">
-          You have the option of monthly or yearly billing.
+          Add-ons help enhance your gaming experience.
         </Typography>
       </div>
       <AddonCardBox>
         <AddonCard
           onClick={() => handleClickCard('service')}
-          cardType={cardType['service'] ? 'true' : 'false'}
+          cardType={
+            multiFormValue['addon']['service']['select'] ? 'true' : 'false'
+          }
         >
           <Checkbox
             sx={{ color: 'hsl(243, 100%, 62%, 0.9) !important' }}
-            checked={cardType['service']}
+            checked={multiFormValue['addon']['service']['select']}
           />
           <AddonCardPanel>
             <div>
@@ -111,17 +113,21 @@ const StepThreeContent = ({ matches }) => {
               </Typography>
             </div>
             <Typography variant="body2" color="hsl(213, 96%, 18%)">
-              {yearPlan ? '+$10/yr' : '+$1/mo'}
+              {multiFormValue['yearly']
+                ? `+$${multiFormValue['addon']['service']['yearly']}/yr`
+                : `+$${multiFormValue['addon']['service']['monthly']}/mo`}
             </Typography>
           </AddonCardPanel>
         </AddonCard>
         <AddonCard
           onClick={() => handleClickCard('storage')}
-          cardType={cardType['storage'] ? 'true' : 'false'}
+          cardType={
+            multiFormValue['addon']['storage']['select'] ? 'true' : 'false'
+          }
         >
           <Checkbox
             sx={{ color: 'hsl(243, 100%, 62%, 0.9) !important' }}
-            checked={cardType['storage']}
+            checked={multiFormValue['addon']['storage']['select']}
           />
           <AddonCardPanel>
             <div>
@@ -140,17 +146,21 @@ const StepThreeContent = ({ matches }) => {
               </Typography>
             </div>
             <Typography variant="body2" color="hsl(213, 96%, 18%)">
-              {yearPlan ? '+$20/yr' : '+$2/mo'}
+              {multiFormValue['yearly']
+                ? `+$${multiFormValue['addon']['storage']['yearly']}/yr`
+                : `+$${multiFormValue['addon']['storage']['monthly']}/mo`}
             </Typography>
           </AddonCardPanel>
         </AddonCard>
         <AddonCard
           onClick={() => handleClickCard('profile')}
-          cardType={cardType['profile'] ? 'true' : 'false'}
+          cardType={
+            multiFormValue['addon']['profile']['select'] ? 'true' : 'false'
+          }
         >
           <Checkbox
             sx={{ color: 'hsl(243, 100%, 62%, 0.9) !important' }}
-            checked={cardType['profile']}
+            checked={multiFormValue['addon']['profile']['select']}
           />
           <AddonCardPanel>
             <div>
@@ -169,7 +179,9 @@ const StepThreeContent = ({ matches }) => {
               </Typography>
             </div>
             <Typography variant="body2" color="hsl(213, 96%, 18%)">
-              {yearPlan ? '+$20/yr' : '+$2/mo'}
+              {multiFormValue['yearly']
+                ? `+$${multiFormValue['addon']['profile']['yearly']}/yr`
+                : `+$${multiFormValue['addon']['profile']['monthly']}/mo`}
             </Typography>
           </AddonCardPanel>
         </AddonCard>
