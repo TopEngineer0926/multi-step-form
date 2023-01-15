@@ -2,6 +2,7 @@ import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
 import { SideBar, StepOne } from './components';
+import StepThree from './components/StepThree';
 import StepTwo from './components/StepTwo';
 
 const FormPanel = styled('div')({
@@ -86,6 +87,8 @@ const StepContent = (props) => {
       return <StepOne handleCheckNextStep={handleCheckNextStep} />;
     case 2:
       return <StepTwo />;
+    case 3:
+      return <StepThree />;
   }
 };
 
