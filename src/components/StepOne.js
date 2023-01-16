@@ -13,7 +13,6 @@ const ContainerMobile = styled('div')({
   paddingBottom: 10,
   paddingTop: 10,
   display: 'grid',
-  gap: 15,
 });
 
 const StepOneTitle = styled('div')({
@@ -45,15 +44,19 @@ const StepOneContent = () => {
 
   return (
     <>
-      <Typography variant="h4" color="hsl(213, 96%, 18%)">
+      <Typography variant="h4" color="hsl(213, 96%, 18%)" fontWeight={700}>
         Personal Info
       </Typography>
-      <Typography variant="body1" color="hsl(229, 24%, 87%)">
+      <Typography variant="body1" color="hsl(231, 11%, 63%)" fontWeight={400}>
         Please provide your name, email address, and phone number
       </Typography>
       <div>
         <InputPanel>
-          <Typography variant="body2" color="hsl(213, 96%, 18%)">
+          <Typography
+            variant="body2"
+            color="hsl(213, 96%, 18%)"
+            fontWeight={600}
+          >
             Name
           </Typography>
           {multiFormValue['info']['name'].length === 0 && (
@@ -72,7 +75,11 @@ const StepOneContent = () => {
       </div>
       <div>
         <InputPanel>
-          <Typography variant="body2" color="hsl(213, 96%, 18%)">
+          <Typography
+            variant="body2"
+            color="hsl(213, 96%, 18%)"
+            fontWeight={600}
+          >
             Email Address
           </Typography>
           {multiFormValue['info']['email'].length === 0 && (
@@ -91,7 +98,11 @@ const StepOneContent = () => {
       </div>
       <div>
         <InputPanel>
-          <Typography variant="body2" color="hsl(213, 96%, 18%)">
+          <Typography
+            variant="body2"
+            color="hsl(213, 96%, 18%)"
+            fontWeight={600}
+          >
             Phone Number
           </Typography>
           {multiFormValue['info']['phone'].length === 0 && (

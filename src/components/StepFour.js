@@ -44,7 +44,7 @@ const PlanTitle = styled('div')({
 });
 
 const ChangePlan = styled(Typography)({
-  color: 'hsl(229, 24%, 87%)',
+  color: 'hsl(231, 11%, 63%)',
   ':hover': {
     color: 'hsl(243, 100%, 62%)',
     cursor: 'pointer',
@@ -110,10 +110,10 @@ const StepFourContent = () => {
   return (
     <StyledStepLastContent>
       <div>
-        <Typography variant="h4" color="hsl(213, 96%, 18%)">
+        <Typography variant="h4" color="hsl(213, 96%, 18%)" fontWeight={700}>
           Finishing up
         </Typography>
-        <Typography variant="body1" color="hsl(229, 24%, 87%)">
+        <Typography variant="body1" color="hsl(231, 11%, 63%)">
           Double-check everything looks OK before confirming.
         </Typography>
       </div>
@@ -158,8 +158,8 @@ const StepFourContent = () => {
             <AddonItem>
               <Typography
                 variant="body2"
-                fontWeight={400}
-                color="hsl(229, 24%, 87%)"
+                fontWeight={500}
+                color="hsl(231, 11%, 63%)"
               >
                 Online service
               </Typography>
@@ -178,8 +178,8 @@ const StepFourContent = () => {
             <AddonItem>
               <Typography
                 variant="body2"
-                fontWeight={400}
-                color="hsl(229, 24%, 87%)"
+                fontWeight={500}
+                color="hsl(231, 11%, 63%)"
               >
                 Larger storage
               </Typography>
@@ -198,8 +198,8 @@ const StepFourContent = () => {
             <AddonItem>
               <Typography
                 variant="body2"
-                fontWeight={400}
-                color="hsl(229, 24%, 87%)"
+                fontWeight={500}
+                color="hsl(231, 11%, 63%)"
               >
                 Customizable profile
               </Typography>
@@ -217,10 +217,10 @@ const StepFourContent = () => {
         </DetailedPanel>
       </ConfirmPanel>
       <TotalPanel>
-        <Typography variant="body2" fontWeight={400} color="hsl(229, 24%, 87%)">
+        <Typography variant="body2" color="hsl(231, 11%, 63%)" fontWeight={600}>
           Total (per {multiFormValue['yearly'] ? 'year' : 'month'})
         </Typography>
-        <Typography variant="h4" color="hsl(243, 100%, 62%)">
+        <Typography variant="h5" color="hsl(243, 100%, 62%)" fontWeight={600}>
           {multiFormValue['yearly']
             ? `$${totalValue}/yr`
             : `+$${totalValue}/mo`}

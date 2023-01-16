@@ -1,7 +1,14 @@
 import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState, createContext } from 'react';
-import { SideBar, StepOne, StepTwo, StepThree, StepFour } from './components';
+import {
+  SideBar,
+  StepOne,
+  StepTwo,
+  StepThree,
+  StepFour,
+  StepLast,
+} from './components';
 
 const FormPanel = styled('div')({
   width: 940,
@@ -37,26 +44,26 @@ const MainContentMobile = styled('div')({
   padding: 20,
 });
 
-const ActionGroup = styled('div')({
-  display: 'flex',
+const ActionGroup = styled('div')(({ step }) => ({
+  display: step === 5 ? 'none' : 'flex',
   justifyContent: 'space-between',
   margin: 10,
   marginLeft: 80,
   marginRight: 80,
-});
+}));
 
-const ActionGroupMobile = styled('div')({
-  display: 'flex',
+const ActionGroupMobile = styled('div')(({ step }) => ({
+  display: step === 5 ? 'none' : 'flex',
   justifyContent: 'space-between',
   position: 'absolute',
   width: 'calc(100% - 30px)',
   bottom: 0,
   padding: 15,
   backgroundColor: 'white',
-});
+}));
 
 const PrevButton = styled(Button)(({ step }) => ({
-  color: 'hsl(229, 24%, 87%)',
+  color: 'hsl(231, 11%, 63%)',
   ':hover': {
     backgroundColor: 'unset',
     color: 'hsl(213, 96%, 18%)',
@@ -91,6 +98,9 @@ const StepContent = (props) => {
       return <StepThree />;
     case 4:
       return <StepFour />;
+    case 5:
+      return <StepLast />;
+    default:
   }
 };
 
@@ -147,7 +157,7 @@ const App = () => {
       multiFormValue['info']['name'].length !== 0 &&
       multiFormValue['info']['email'].length !== 0 &&
       multiFormValue['info']['phone'].length !== 0 &&
-      step < 4
+      step < 5
     ) {
       setStep(step + 1);
     }
@@ -167,7 +177,7 @@ const App = () => {
           <MainContentMobile>
             <StepContent step={step} />
           </MainContentMobile>
-          <ActionGroupMobile>
+          <ActionGroupMobile step={step}>
             <PrevButton step={step} onClick={handleClickPrevButton}>
               Go Back
             </PrevButton>
@@ -191,7 +201,7 @@ const App = () => {
           <SideBar />
           <MainContent>
             <StepContent step={step} />
-            <ActionGroup>
+            <ActionGroup step={step}>
               <PrevButton step={step} onClick={handleClickPrevButton}>
                 Go Back
               </PrevButton>

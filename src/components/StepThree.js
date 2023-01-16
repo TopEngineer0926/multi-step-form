@@ -1,6 +1,6 @@
 import { Typography, useMediaQuery, useTheme, Checkbox } from '@mui/material';
 import { styled } from '@mui/system';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
@@ -78,10 +78,10 @@ const StepThreeContent = ({ matches }) => {
   return (
     <StyledStepThreeContent>
       <div>
-        <Typography variant="h4" color="hsl(213, 96%, 18%)">
+        <Typography variant="h4" color="hsl(213, 96%, 18%)" fontWeight={700}>
           Pick add-ons
         </Typography>
-        <Typography variant="body1" color="hsl(229, 24%, 87%)">
+        <Typography variant="body1" color="hsl(231, 11%, 63%)">
           Add-ons help enhance your gaming experience.
         </Typography>
       </div>
@@ -102,17 +102,18 @@ const StepThreeContent = ({ matches }) => {
                 variant="h6"
                 color="hsl(213, 96%, 18%)"
                 fontSize={matches ? '1rem' : '1.25rem'}
+                fontWeight={600}
               >
                 Online Service
               </Typography>
               <Typography
-                color="hsl(229, 24%, 87%)"
+                color="hsl(231, 11%, 63%)"
                 fontSize={matches ? '0.8rem' : '1rem'}
               >
                 Access to multiplayer games
               </Typography>
             </div>
-            <Typography variant="body2" color="hsl(213, 96%, 18%)">
+            <Typography variant="body2" color="hsl(243, 100%, 62%)">
               {multiFormValue['yearly']
                 ? `+$${multiFormValue['addon']['service']['yearly']}/yr`
                 : `+$${multiFormValue['addon']['service']['monthly']}/mo`}
@@ -135,17 +136,18 @@ const StepThreeContent = ({ matches }) => {
                 variant="h6"
                 color="hsl(213, 96%, 18%)"
                 fontSize={matches ? '1rem' : '1.25rem'}
+                fontWeight={600}
               >
                 Larger storage
               </Typography>
               <Typography
-                color="hsl(229, 24%, 87%)"
+                color="hsl(231, 11%, 63%)"
                 fontSize={matches ? '0.8rem' : '1rem'}
               >
                 Extra 1TB of cloud save
               </Typography>
             </div>
-            <Typography variant="body2" color="hsl(213, 96%, 18%)">
+            <Typography variant="body2" color="hsl(243, 100%, 62%)">
               {multiFormValue['yearly']
                 ? `+$${multiFormValue['addon']['storage']['yearly']}/yr`
                 : `+$${multiFormValue['addon']['storage']['monthly']}/mo`}
@@ -168,17 +170,18 @@ const StepThreeContent = ({ matches }) => {
                 variant="h6"
                 color="hsl(213, 96%, 18%)"
                 fontSize={matches ? '1rem' : '1.25rem'}
+                fontWeight={600}
               >
                 Customizable profile
               </Typography>
               <Typography
-                color="hsl(229, 24%, 87%)"
+                color="hsl(231, 11%, 63%)"
                 fontSize={matches ? '0.8rem' : '1rem'}
               >
                 Custom theme on your profile
               </Typography>
             </div>
-            <Typography variant="body2" color="hsl(213, 96%, 18%)">
+            <Typography variant="body2" color="hsl(243, 100%, 62%)">
               {multiFormValue['yearly']
                 ? `+$${multiFormValue['addon']['profile']['yearly']}/yr`
                 : `+$${multiFormValue['addon']['profile']['monthly']}/mo`}

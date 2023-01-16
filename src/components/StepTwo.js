@@ -1,6 +1,6 @@
 import { Typography, useMediaQuery, useTheme, Switch } from '@mui/material';
 import { styled } from '@mui/system';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
@@ -104,10 +104,10 @@ const StepTwoContent = ({ matches }) => {
   return (
     <StyledStepTwoContent matches={matches ? 'true' : 'false'}>
       <div>
-        <Typography variant="h4" color="hsl(213, 96%, 18%)">
+        <Typography variant="h4" color="hsl(213, 96%, 18%)" fontWeight={700}>
           Select your plan
         </Typography>
-        <Typography variant="body1" color="hsl(229, 24%, 87%)">
+        <Typography variant="body1" color="hsl(231, 11%, 63%)" fontWeight={400}>
           You have the option of monthly or yearly billing.
         </Typography>
       </div>
@@ -119,12 +119,16 @@ const StepTwoContent = ({ matches }) => {
             multiFormValue['plan']['arcade']['select'] ? 'true' : 'false'
           }
         >
-          <img src="/assets/images/icon-arcade.svg" />
+          <img src="/assets/images/icon-arcade.svg" alt="arcade" />
           <div>
-            <Typography variant="h6" color="hsl(213, 96%, 18%)">
+            <Typography
+              variant="h6"
+              color="hsl(213, 96%, 18%)"
+              fontWeight={600}
+            >
               Arcade
             </Typography>
-            <Typography color="hsl(229, 24%, 87%)">
+            <Typography color="hsl(231, 11%, 63%)">
               {multiFormValue['yearly']
                 ? `$${multiFormValue['plan']['arcade']['yearly']}/yr`
                 : `$${multiFormValue['plan']['arcade']['monthly']}/mo`}
@@ -143,12 +147,16 @@ const StepTwoContent = ({ matches }) => {
             multiFormValue['plan']['advanced']['select'] ? 'true' : 'false'
           }
         >
-          <img src="/assets/images/icon-advanced.svg" />
+          <img src="/assets/images/icon-advanced.svg" alt="advanced" />
           <div>
-            <Typography variant="h6" color="hsl(213, 96%, 18%)">
+            <Typography
+              variant="h6"
+              color="hsl(213, 96%, 18%)"
+              fontWeight={600}
+            >
               Advanced
             </Typography>
-            <Typography color="hsl(229, 24%, 87%)">
+            <Typography color="hsl(231, 11%, 63%)">
               {multiFormValue['yearly']
                 ? `$${multiFormValue['plan']['advanced']['yearly']}/yr`
                 : `$${multiFormValue['plan']['advanced']['monthly']}/mo`}
@@ -165,12 +173,16 @@ const StepTwoContent = ({ matches }) => {
           onClick={() => handleClickCard('pro')}
           cardType={multiFormValue['plan']['pro']['select'] ? 'true' : 'false'}
         >
-          <img src="/assets/images/icon-pro.svg" />
+          <img src="/assets/images/icon-pro.svg" alt="pro" />
           <div>
-            <Typography variant="h6" color="hsl(213, 96%, 18%)">
+            <Typography
+              variant="h6"
+              color="hsl(213, 96%, 18%)"
+              fontWeight={600}
+            >
               Pro
             </Typography>
-            <Typography color="hsl(229, 24%, 87%)">
+            <Typography color="hsl(231, 11%, 63%)">
               {multiFormValue['yearly']
                 ? `$${multiFormValue['plan']['pro']['yearly']}/yr`
                 : `$${multiFormValue['plan']['pro']['monthly']}/mo`}
@@ -188,9 +200,10 @@ const StepTwoContent = ({ matches }) => {
           variant="h6"
           color={
             multiFormValue['yearly']
-              ? 'hsl(229, 24%, 87%)'
+              ? 'hsl(231, 11%, 63%)'
               : 'hsl(213, 96%, 18%)'
           }
+          fontWeight={600}
         >
           Monthly
         </Typography>
@@ -203,8 +216,9 @@ const StepTwoContent = ({ matches }) => {
           color={
             multiFormValue['yearly']
               ? 'hsl(213, 96%, 18%)'
-              : 'hsl(229, 24%, 87%)'
+              : 'hsl(231, 11%, 63%)'
           }
+          fontWeight={600}
         >
           Yearly
         </Typography>
