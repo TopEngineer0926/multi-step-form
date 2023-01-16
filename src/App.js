@@ -173,7 +173,7 @@ const App = () => {
     return (
       <MultiFormContext.Provider value={[multiFormValue, setMultiFormValue]}>
         <div>
-          <SideBar />
+          <SideBar step={step} />
           <MainContentMobile>
             <StepContent step={step} />
           </MainContentMobile>
@@ -198,7 +198,7 @@ const App = () => {
     <MultiFormContext.Provider value={[multiFormValue, setMultiFormValue]}>
       <Container>
         <FormPanel>
-          <SideBar />
+          <SideBar step={step} />
           <MainContent>
             <StepContent step={step} />
             <ActionGroup step={step}>
