@@ -1,7 +1,7 @@
 import { TextField, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
@@ -31,6 +31,11 @@ const InputPanel = styled('div')({
 
 const StepOneContent = () => {
   const [multiFormValue, setMultiFormValue] = useContext(MultiFormContext);
+  const [inputError, setInputError] = useState({
+    name: false,
+    email: false,
+    phone: false,
+  });
 
   const handleChangeInputForm = (e, type) => {
     setMultiFormValue({
@@ -39,6 +44,17 @@ const StepOneContent = () => {
         ...multiFormValue['info'],
         [type]: e.target.value,
       },
+    });
+    setInputError({
+      ...inputError,
+      [type]: multiFormValue['info'][type].length === 0 ? true : false,
+    });
+  };
+
+  const handleChangeBlur = (type) => {
+    setInputError({
+      ...inputError,
+      [type]: multiFormValue['info'][type].length === 0 ? true : false,
     });
   };
 
@@ -59,7 +75,7 @@ const StepOneContent = () => {
           >
             Name
           </Typography>
-          {multiFormValue['info']['name'].length === 0 && (
+          {inputError['name'] && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -68,7 +84,8 @@ const StepOneContent = () => {
         <TextField
           fullWidth
           placeholder="e.g. Stephen King"
-          error={multiFormValue['info']['name'].length === 0}
+          error={inputError['name']}
+          onBlur={() => handleChangeBlur('name')}
           value={multiFormValue['info']['name']}
           onChange={(e) => handleChangeInputForm(e, 'name')}
         />
@@ -82,7 +99,7 @@ const StepOneContent = () => {
           >
             Email Address
           </Typography>
-          {multiFormValue['info']['email'].length === 0 && (
+          {inputError['email'] && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -91,7 +108,8 @@ const StepOneContent = () => {
         <TextField
           fullWidth
           placeholder="e.g. stephenking@lorem.com"
-          error={multiFormValue['info']['email'].length === 0}
+          error={inputError['email']}
+          onBlur={() => handleChangeBlur('email')}
           value={multiFormValue['info']['email']}
           onChange={(e) => handleChangeInputForm(e, 'email')}
         />
@@ -105,7 +123,7 @@ const StepOneContent = () => {
           >
             Phone Number
           </Typography>
-          {multiFormValue['info']['phone'].length === 0 && (
+          {inputError['phone'] && (
             <Typography variant="body2" color="hsl(354, 84%, 57%)">
               This field is required
             </Typography>
@@ -114,7 +132,8 @@ const StepOneContent = () => {
         <TextField
           fullWidth
           placeholder="e.g. +1 234 567 890"
-          error={multiFormValue['info']['phone'].length === 0}
+          error={inputError['phone']}
+          onBlur={() => handleChangeBlur('phone')}
           value={multiFormValue['info']['phone']}
           onChange={(e) => handleChangeInputForm(e, 'phone')}
         />

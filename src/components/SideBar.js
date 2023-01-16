@@ -84,8 +84,8 @@ const SideBar = ({ step }) => {
         }}
       >
         {StepItemText.map((itemText, index) => (
-          <StepItem>
-            <AvatarItem key={index} step={step} index={index + 1}>
+          <StepItem key={index}>
+            <AvatarItem step={step} index={index + 1}>
               {index + 1}
             </AvatarItem>
             <div>
