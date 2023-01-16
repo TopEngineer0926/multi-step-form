@@ -1,7 +1,7 @@
 import { Button, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState, createContext } from 'react';
-import { SideBar, StepOne, StepTwo, StepThree, StepLast } from './components';
+import { SideBar, StepOne, StepTwo, StepThree, StepFour } from './components';
 
 const FormPanel = styled('div')({
   width: 940,
@@ -90,7 +90,7 @@ const StepContent = (props) => {
     case 3:
       return <StepThree />;
     case 4:
-      return <StepLast />;
+      return <StepFour />;
   }
 };
 
