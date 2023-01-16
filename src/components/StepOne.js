@@ -1,7 +1,7 @@
 import { TextField, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useMediaQuery, useTheme } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { MultiFormContext } from '../App';
 
 const Container = styled('div')({
