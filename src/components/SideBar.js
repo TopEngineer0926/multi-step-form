@@ -30,10 +30,16 @@ const SideBarPanelMobile = styled('div')({
 });
 
 const AvatarItem = styled(Avatar)(({ step, index }) => ({
-  color: step === index ? 'hsl(213, 96%, 18%)' : 'hsl(231, 100%, 99%)',
-  background: step === index ? 'hsl(206, 94%, 87%)' : 'transparent',
+  color:
+    step === index || (step === 5 && index === 4)
+      ? 'hsl(213, 96%, 18%)'
+      : 'hsl(231, 100%, 99%)',
+  background:
+    step === index || (step === 5 && index === 4)
+      ? 'hsl(206, 94%, 87%)'
+      : 'transparent',
   border:
-    step === index
+    step === index || (step === 5 && index === 4)
       ? '2px solid hsl(206, 94%, 87%)'
       : '2px solid hsl(231, 100%, 99%)',
   borderRadius: '50%',
